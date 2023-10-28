@@ -1,0 +1,114 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: Blinds API
+  description: >-
+    This is a simple set of API's to change window blind settings
+    programmatically.  No JSON payloads, just post variables to set new values.
+paths:
+  /blindsState:
+    get:
+      operationId: 'blindsState-get'
+      description: Returns whether the blinds are closed or open.
+      parameters: []
+      responses:
+        '200':
+          description: Returns the state of the blinds, open or closed.
+          content:
+            application/txt:
+              schema:
+                type: string
+  /blindsDelay:
+    get:
+      operationId: 'blindsDelay-get'
+      description: >-
+        Returns the amount of time spent opening or closing the blinds.  Might
+        need to adjust to get them right where you prefer.  Default is 3000 (3
+        seconds). Must be greater than zero and less than 10000.
+      parameters: []
+      responses:
+        '200':
+          description: milliseconds
+          content:
+            application/txt:
+              schema:
+                type: integer
+    post:
+      operationId: 'blindsDelay-post'
+      description: >-
+        Sets the amount of time spent opening or closing the blinds.  Might need
+        to adjust to get them right where you prefer.  Default is 3000 (3
+        seconds). Must be greater than zero and less than 10000.  No JSON
+        payloads, just send query parameter and value.
+      parameters:
+        - in: query
+          name: blindsDelay
+          required: true
+          schema: 
+            type: integer
+      responses:
+        '200':
+          description: milliseconds
+          content:
+            application/txt: 
+              schema:
+                type: integer
+  /blindsMode:
+    get:
+      operationId: 'blindsMode-get'
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/txt:
+              schema:
+                type: string
+    post:
+      operationId: 'blindsMode-post'
+      description: >-
+        This allows you to set the blinds mode. Options are: auto, close, open.
+        Auto mode will use the light sensor to open when light is detected
+        (sunrise) and close when it gets dark for night privacy.  Note that
+        blinds assume closed state is UP to block light, so start closed UP.
+      parameters:
+        - in: query
+          name: blindsMode
+          required: true
+          schema: 
+            type: string
+      requestBody:
+        content:
+          application/txt:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: success
+          content:
+            application/txt:
+              schema:
+                type: string
+        '422':
+          description: >-
+            Incorrect Parameter sent, expected one of the following: auto,
+            close, open, up, down.  You sent: <input>
+          content:
+            application/txt:
+              schema:
+                type: string
+components:
+  securitySchemes: {}
+  schemas:
+    Blinds:
+      properties:
+        blindsMode:
+          nullable: false
+          type: string
+        blindsDelay:
+          nullable: false
+          type: integer
+servers:
+  - url: './'
+    description: The IP of the window blinds after connecting to WIFI.
