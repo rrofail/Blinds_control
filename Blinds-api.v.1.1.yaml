@@ -9,7 +9,7 @@ paths:
   /lightLevel:
     get:
       operationId: 'lightLevel-get'
-      description: Measures the amount of light and returns a value between 0-1000, darkest to lightest.
+      description: Measures the amount of light and returns a value between 0-1000, darkest to lightest. For AUTO mode, when it reaches 425, auto mode opens blinds.  When it drops to 250, auto mode will close the blinds.  This gap in values avoids bouncing open and closed as the sun sets.  
       parameters: []
       responses:
         '200':
