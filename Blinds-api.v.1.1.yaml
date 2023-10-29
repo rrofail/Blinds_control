@@ -109,6 +109,3 @@ components:
         blindsDelay:
           nullable: false
           type: integer
-servers:
-  - url: './'
-    description: The IP of the window blinds after connecting to WIFI.
