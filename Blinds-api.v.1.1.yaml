@@ -6,6 +6,18 @@ info:
     This is a simple set of API's to change window blind settings
     programmatically.  No JSON payloads, just post variables to set new values.
 paths:
+  /lightLevel:
+    get:
+      operationId: 'lightLevel-get'
+      description: Measures the amount of light and returns a value between 0-1000, darkest to lightest.
+      parameters: []
+      responses:
+        '200':
+          description: Measures the amount of light and returns a value between 0-1000, darkest to lightest.
+          content:
+            application/txt:
+              schema:
+                type: string
   /blindsState:
     get:
       operationId: 'blindsState-get'
